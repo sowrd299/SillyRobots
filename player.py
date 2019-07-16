@@ -38,6 +38,36 @@ class Player():
 
     # BOARD MANAGEMENT
 
+    def get_robots(self):
+        '''
+        Returns the robots the player has in play
+        '''
+        return filter(None, self.board)
+
+    def _get_total_size(robots : [Robot]):
+        '''
+        Returns the total size of the given robots
+        '''
+        factions = set()
+        size = 0
+        for robot in robots:
+            factions.append(robot.get_factions())
+            size += robot.get_size()
+        return len(factions) + size
+
+    def get_total_size(self):
+        '''
+        Returns the total size of the given robots
+        '''
+        return self._get_total_size(self.get_robots())
+
+    def spawn_robot(self, robot_card : RoboCard, pos : int):
+        '''
+        Returns if the given robot may be legally played at the given position
+        '''
+        assert 0 <= pos <= len(self.board), "Illegal board position "+str(pos)
+        return (not self.board[pos]) and self._get_total_size(self.get_robots() + [Robot(robot_card)]) <= self.max_size
+
     def spawn_robot(self, robot_card : RoboCard, pos : int) -> [Subroutine]:
         '''
         Spawns a robot at the given spot

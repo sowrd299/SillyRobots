@@ -46,3 +46,17 @@ class Robot():
         Inflict i glitch onto the robot
         '''
         self._subroutine_track += i
+
+    # STAT CHECKING
+
+    def get_size(self):
+        '''
+        Returns the size taken up by this robot
+        '''
+        return self._card.cost + (self.routine._card.cost if self.routine else 0)
+
+    def get_factions(self):
+        '''
+        Returns the factions the robot belongs to
+        '''
+        return self._card.factions
