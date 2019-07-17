@@ -6,11 +6,30 @@ from robot import Robot
 class Player():
 
     max_size = 9 # the maximum total size of robots the player may have in play
+    board_size = 4 # how many slots for robots are on the board
 
     def __init__(self, deck : [Card]):
         self._deck = deck
         self._hand = []
-        self.board = [None] * 4 # BOARD SIZE IS IMPLEMENTED HERE
+        self.board = [None] * self.board_size 
+        self.reset_shields()
+
+    # SHIELD MANAGEMENT
+
+    def get_shield(self, pos : int):
+        '''
+        Gets the shield value at the given position
+        '''
+        return self.shield[pos]
+
+    def set_shield(self, val : int, pos : int):
+        '''
+        Sets the value of the shied in a given position
+        '''
+        self._shields[pos] = val
+    
+    def reset_shields(self):
+        self._shields = [0] * self.board_size
 
     # BASIC CARD/LIFE MANAGEMENT
 
