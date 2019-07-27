@@ -1,7 +1,7 @@
 from card import Card
 from subroutine import Subroutine
 
-def class RoboCard(Card):
+class RoboCard(Card):
 
     def __init__(self, name, factions, cost, bootup : Subroutine, program : [Subroutine]):
         '''

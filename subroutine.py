@@ -3,7 +3,7 @@ class Subroutine():
     A class for Subroutines robots carry out
     '''
 
-    def __init__(self, accuracy = 0 : int, damage = 0 : int, shield = 0 : int, glitch = 0 : int):
+    def __init__(self, accuracy : int = 0 , damage : int = 0 , shield : int = 0 , glitch : int = 0 ):
         '''
         :param accuracy: How well the robot hits for damage
         :param damage: The amount of damagy

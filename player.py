@@ -8,9 +8,10 @@ class Player():
     max_size = 9 # the maximum total size of robots the player may have in play
     board_size = 4 # how many slots for robots are on the board
 
-    def __init__(self, deck : [Card]):
+    def __init__(self, name, deck : [Card]):
         self._deck = deck
         self._hand = []
+        self.name = name
         self.board = [None] * self.board_size 
         self.reset_shields()
 
@@ -20,7 +21,7 @@ class Player():
         '''
         Gets the shield value at the given position
         '''
-        return self.shield[pos]
+        return self._shields[pos]
 
     def set_shield(self, val : int, pos : int):
         '''
@@ -39,17 +40,17 @@ class Player():
         '''
         if i > len(self._deck):
             i = len(self.deck)
-        self._hand.append(deck[:i])
+        self._hand.append(self._deck[:i])
         # TODO: sort the hand
-        self._deck = deck[i:]
+        self._deck = self._deck[i:]
 
-    def take_damage(self, i : int)
+    def take_damage(self, i : int):
         '''
         Inflicts i damage on the player at the give point in space
         '''
         self.draw(i)
 
-    def defeated(self)
+    def defeated(self):
         '''
         Returns whether or not this player has been defeated
         '''

@@ -6,13 +6,13 @@ class Robot():
     '''
 
     def __init__(self, card : RoboCard):
-        self._card = RoboCard
+        self._card = card
         self._subroutine_track = 0
         self.routine = None
 
     # BASIC OPPERATIONS
 
-    def finished(self)
+    def finished(self):
         '''
         Returns if the robot has finished it's program
         '''
