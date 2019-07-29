@@ -37,9 +37,14 @@ class BoardTextDisplay():
     def disp(self, game : GameManager):
         r = []
         for player in game._players:
-            r.append("---{0}---".format(player.name))
+            # name and health
+            r.append("---{0} {{{1}}}---".format(player.name, len(player._deck)))
+            r.append("")
+            # robots
             r.append("s{0}/s{1}  robots:".format(player.get_total_size(), player.max_size))
             r.extend(self.disp_set(player.board, self._robot_disp))
+            r.append("")
+            # hand
             r.append("hand:")
             r.extend(self.disp_set(player._hand, self._card_disp))
         return r

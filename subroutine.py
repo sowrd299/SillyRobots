@@ -17,11 +17,12 @@ class Subroutine():
 
     def __str__(self):
         r = ""
-        if self.damage > 0:
-            r += str(self.accuracy) + "A->" + str(self.damage)+"D"
         if self.shield > 0:
             r += str(self.shield)+"S"
         if self.glitch > 0:
             r += str(self.glitch)+"G"
+        if self.damage > 0:
+            r += str(self.accuracy) + "A->" + str(self.damage)+"D"
         if not r:
             r += "n.op"
+        return r

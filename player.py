@@ -40,7 +40,7 @@ class Player():
         '''
         if i > len(self._deck):
             i = len(self.deck)
-        self._hand.append(self._deck[:i])
+        self._hand.extend(self._deck[:i])
         # TODO: sort the hand
         self._deck = self._deck[i:]
 

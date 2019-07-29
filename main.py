@@ -38,6 +38,7 @@ def run_test_game():
     g = start_test_game()
     disp_board(disp, g)
     g.turn_start()
+    disp_board(disp, g)
 
 if __name__ == "__main__":
     run_test_game()
