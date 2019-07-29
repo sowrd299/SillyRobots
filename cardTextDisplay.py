@@ -4,8 +4,8 @@ class CardTextDispaly():
 
     # box variables
 
-    l_corner = "/"
-    r_corner = "\\"
+    l_corner = "+"
+    r_corner = "+"
     h_edge = "-"
     v_edge = "|"
 
@@ -21,7 +21,7 @@ class CardTextDispaly():
 
     def disp_title_line(self, card : Card):
         n = self.disp_name(card)
-        c = self.disp_cost_info(card):
+        c = self.disp_cost_info(card)
         return "{0} {1}".format(n, c)
 
     def disp_box(self, text : [str], width = 0, height = 0) -> [str]:
@@ -42,7 +42,7 @@ class CardTextDispaly():
         r.append(self.disp_title_line(card))
         return r
 
-    def disp(self, card : Card)
+    def disp(self, card : Card):
         r = self._disp(card)
         return self.disp_box(r)
         

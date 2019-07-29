@@ -1,6 +1,6 @@
 from card import Card
 from subroutine import Subroutine
-from roboCard import RoboCard
+from robotCard import RobotCard
 from robot import Robot
 
 class Player():
@@ -64,14 +64,15 @@ class Player():
         '''
         return filter(None, self.board)
 
-    def _get_total_size(robots : [Robot]):
+    def _get_total_size(self, robots : [Robot]):
         '''
         Returns the total size of the given robots
         '''
         factions = set()
         size = 0
         for robot in robots:
-            factions.append(robot.get_factions())
+            for faction in robot.get_factions():
+                factions.add(faction)
             size += robot.get_size()
         return len(factions) + size
 
@@ -81,14 +82,14 @@ class Player():
         '''
         return self._get_total_size(self.get_robots())
 
-    def spawn_robot(self, robot_card : RoboCard, pos : int):
+    def spawn_robot(self, robot_card : RobotCard, pos : int):
         '''
         Returns if the given robot may be legally played at the given position
         '''
         assert 0 <= pos <= len(self.board), "Illegal board position "+str(pos)
         return (not self.board[pos]) and self._get_total_size(self.get_robots() + [Robot(robot_card)]) <= self.max_size
 
-    def spawn_robot(self, robot_card : RoboCard, pos : int) -> [Subroutine]:
+    def spawn_robot(self, robot_card : RobotCard, pos : int) -> [Subroutine]:
         '''
         Spawns a robot at the given spot
         Returns any bootup subroutines caused by the spawn

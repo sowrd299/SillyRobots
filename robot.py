@@ -1,11 +1,11 @@
-from roboCard import RoboCard
+from robotCard import RobotCard
 
 class Robot():
     '''
     A class for robots actually in play
     '''
 
-    def __init__(self, card : RoboCard):
+    def __init__(self, card : RobotCard):
         self._card = card
         self._subroutine_track = 0
         self.routine = None

@@ -1,8 +1,10 @@
 from gameManager import GameManager
 from player import Player
-from roboCard import RoboCard
+from robotCard import RobotCard
 from robot import Robot
 from subroutine import Subroutine
+
+from boardTextDisplay import BoardTextDisplay
 
 def start_test_game() -> GameManager:
 
@@ -12,10 +14,10 @@ def start_test_game() -> GameManager:
     sub_basic_glitch = Subroutine(glitch = 1)
     sub_noop = Subroutine()
     # make some robots
-    robo_chainer = RoboCard("Chainer", [], 2, None, [sub_basic_shoot, sub_basic_glitch, sub_basic_glitch])
-    robo_patience = RoboCard("Patience", [], 3, None, [sub_noop, sub_noop, sub_noop, Subroutine(accuracy = 4, damage = 1, glitch = 1)])
-    robo_paladin = RoboCard("Pali", ["TABLE_COG"], 2, None, [sub_noop, sub_basic_shield, sub_basic_shield])    
-    robo_cavlier = RoboCard("Cavalier", ["TABLE_COG"], 2, None, [sub_basic_shoot, sub_basic_shield])
+    robo_chainer = RobotCard("Chainer", [], 2, None, [sub_basic_shoot, sub_basic_glitch, sub_basic_glitch])
+    robo_patience = RobotCard("Patience", [], 3, None, [sub_noop, sub_noop, sub_noop, Subroutine(accuracy = 4, damage = 1, glitch = 1)])
+    robo_paladin = RobotCard("Pali", ["TABLE_COG"], 2, None, [sub_noop, sub_basic_shield, sub_basic_shield])    
+    robo_cavlier = RobotCard("Cavalier", ["TABLE_COG"], 2, None, [sub_basic_shoot, sub_basic_shield])
     # make some players
     p1 = Player("Arva", [robo_chainer] * 2)
     p1.board = [Robot(robo_chainer), None, None, None]
@@ -27,6 +29,15 @@ def start_test_game() -> GameManager:
 
     return g
 
-if __name__ == "__main__":
+def disp_board(disp : BoardTextDisplay, game : GameManager):
+    for line in disp.disp(game):
+        print(line)
+
+def run_test_game():
+    disp = BoardTextDisplay()
     g = start_test_game()
+    disp_board(disp, g)
     g.turn_start()
+
+if __name__ == "__main__":
+    run_test_game()
