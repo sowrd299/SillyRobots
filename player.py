@@ -69,7 +69,7 @@ class Player():
         '''
         Returns the robots the player has in play
         '''
-        return filter(None, self.board)
+        return list(filter(None, self.board))
 
     def _get_total_size(self, robots : [Robot]):
         '''
@@ -89,12 +89,20 @@ class Player():
         '''
         return self._get_total_size(self.get_robots())
 
-    def spawn_robot(self, robot_card : RobotCard, pos : int):
+    def may_play_robot(self, robot_card : RobotCard, pos : int):
         '''
-        Returns if the given robot may be legally played at the given position
+        Returns if the given robot may be legally spawned at the given position
         '''
         assert 0 <= pos <= len(self.board), "Illegal board position "+str(pos)
-        return (not self.board[pos]) and self._get_total_size(self.get_robots() + [Robot(robot_card)]) <= self.max_size
+        return (not self.board[pos]) and robot_card in self._hand and self._get_total_size(self.get_robots() + [Robot(robot_card)]) <= self.max_size
+
+    def play_robot(self, robot_card : RobotCard, pos : int) -> [Subroutine]:
+        '''
+        Plays the given robot card from the player's hand onto their board
+        Returns bootup subroutines (run at that space)
+        '''
+        self._hand.remove(robot_card)
+        return self.spawn_robot(robot_card, pos)
 
     def spawn_robot(self, robot_card : RobotCard, pos : int) -> [Subroutine]:
         '''
@@ -116,3 +124,11 @@ class Player():
             if robot and robot.finished():
                 self._discard.append(robot.get_card())
                 self.board[i] = None
+
+    # GETTERS
+
+    def get_hand(self):
+        '''
+        Returns a shallow copy of the player's hand
+        '''
+        return list(self._hand)

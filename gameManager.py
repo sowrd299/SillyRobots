@@ -1,5 +1,6 @@
 from subroutine import Subroutine
 from player import Player
+from robotCard import RobotCard
 
 class GameManager():
 
@@ -29,7 +30,42 @@ class GameManager():
         if glt > 0 and target.board[pos]:
             target.board[pos].take_glitch(glt)
 
+    def _standardize_hand_card_input(self, player, card):
+        # TODO: maybe this standardization should happen elsewhere...?
+        '''
+        Standarizes card input that may be in integer form
+        '''
+        if isinstance(card, int):
+            return player.get_hand()[card]
+        else:
+            return card
+
+    def may_play_card(self, player_ind : int, card : "int or RobotCard", pos : int):
+        '''
+        returns if the given player may play the given robot at the given spot
+        '''
+        # setup variables
+        player = self._players[player_ind]
+        card = self._standardize_hand_card_input(player, card)
+        # do the test
+        return player.may_play_robot(card, pos)
+
+    def play_card(self, player_ind : int, card : "int or Card", pos : int):
+        '''
+        Plays a card from the given players hand at the given location
+        '''
+        # setup variables
+        player = self._players[player_ind]
+        card = self._standardize_hand_card_input(player, card)
+        # play a robot
+        if isinstance(card, RobotCard): 
+            bootup = player.play_robot(card, pos)
+            # manage bootup
+            for sub in bootup:
+                self.resolve_subroutine(sub)
+
     # game setup management
+
     def start_game(self):
         for player in self._players:
             # shuffle decks

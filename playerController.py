@@ -27,3 +27,15 @@ class PlayerController():
         if not self.game.can_act(self.player_ind):
             raise OutOfTurnException
         return True 
+
+    def may_play_card(self, card : "int or Card", pos : int):
+        '''
+        Returns if the controlled player may play the given card at the given location
+        '''
+        return self.game.may_play_card(self.player_ind, card, pos)
+
+    def play_card(self, card : "int or Card", pos : int):
+        '''
+        Returns if the controlled player may play the given card at the given location
+        '''
+        self.game.play_card(self.player_ind, card, pos)

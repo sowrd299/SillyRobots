@@ -48,7 +48,8 @@ def run_test_game():
         while not player_controllers[g.get_current_player_ind()].take_actions():
             pass
         g.end_turn()
-        print("NEXT TURN")
+        print("\n~> NEXT TURN")
+    print("~> Game Over)
 
 if __name__ == "__main__":
     run_test_game()
