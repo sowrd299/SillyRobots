@@ -7,6 +7,9 @@ from subroutine import Subroutine
 from boardTextDisplay import BoardTextDisplay
 
 def start_test_game() -> GameManager:
+    '''
+    Creates a test game state
+    '''
 
     # make some reuseable subs
     sub_basic_shoot = Subroutine(accuracy = 2, damage = 1)
@@ -32,7 +35,7 @@ def start_test_game() -> GameManager:
 
 def disp_board(disp : BoardTextDisplay, game : GameManager):
     for line in disp.disp(game):
-        print(line)
+        print("\t",line)
 
 def run_test_game():
     disp = BoardTextDisplay()
@@ -40,8 +43,8 @@ def run_test_game():
     disp_board(disp, g)
     # the main turn loop
     while not g.get_over():
+        print(("\n"*5) + ("V"*10) + ("\n"*5)) # spacer between turns
         g.turn_start()
-        print("\n\n" + ("="*10) + "\n\n")
         disp_board(disp, g)
         input()
         g.end_turn()
