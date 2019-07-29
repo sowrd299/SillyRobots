@@ -4,6 +4,10 @@ from subroutine import Subroutine
 
 class RobotCardTextDisplay(CardTextDispaly):
 
+    # rendering variables
+
+    type_name = "drofux"
+
     def __init__(self):
         pass
 
@@ -26,7 +30,6 @@ class RobotCardTextDisplay(CardTextDispaly):
         '''
         # title bar
         r = super()._disp(card)
-        r.append("--lorrow-")
         # the program
         r.extend(self.disp_program(card.program))
         return r

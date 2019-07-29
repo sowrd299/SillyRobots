@@ -1,6 +1,9 @@
 from card import Card
 
 class CardTextDispaly():
+    '''
+    An ABSTRACT class for rendering cards
+    '''
 
     # box variables
 
@@ -8,6 +11,10 @@ class CardTextDispaly():
     r_corner = "+"
     h_edge = "-"
     v_edge = "|"
+
+    # other display variables
+
+    type_name = "ERROR_GENERIC_CARD"
 
     # dispaly functions
 
@@ -40,6 +47,7 @@ class CardTextDispaly():
     def _disp(self, card : Card):
         r = []
         r.append(self.disp_title_line(card))
+        r.append("--{0}-".format(self.type_name))
         return r
 
     def disp(self, card : Card):

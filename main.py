@@ -34,7 +34,7 @@ def start_test_game() -> GameManager:
     return g
 
 def disp_board(disp : BoardTextDisplay, game : GameManager):
-    for line in disp.disp(game):
+    for line in disp.disp(game, game.get_current_player_ind()):
         print("\t",line)
 
 def run_test_game():
