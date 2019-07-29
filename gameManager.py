@@ -20,7 +20,7 @@ class GameManager():
             target.take_damage(dmg)
         if shl > 0:
             controller.set_shield(shl, pos)
-        if glt > 0:
+        if glt > 0 and target.board[pos]:
             target.board[pos].take_glitch(glt)
 
     # turn management

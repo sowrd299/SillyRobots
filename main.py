@@ -18,9 +18,10 @@ def start_test_game() -> GameManager:
     robo_patience = RobotCard("Patient One", [], 3, None, [sub_noop, sub_noop, sub_noop, Subroutine(accuracy = 4, damage = 1, glitch = 1)])
     robo_paladin = RobotCard("Paladin", ["TABLE_COG"], 2, None, [sub_noop, sub_basic_shield, sub_basic_shield])    
     robo_cavlier = RobotCard("Cavalier", ["TABLE_COG"], 2, None, [sub_basic_shoot, sub_basic_shield])
+    robo_stifler = RobotCard("Stifler", ["TRICKSTERS"], 1, None, [sub_basic_shield, sub_basic_glitch])
     # make some players
     p1 = Player("Arva", [robo_chainer] * 2)
-    p1.board = [Robot(robo_chainer), None, None, None]
+    p1.board = [None, Robot(robo_chainer), Robot(robo_stifler), None]
     p2 = Player("Buroad", [robo_paladin] * 2)
     p2.board = [Robot(robo_patience), None, Robot(robo_cavlier), None]
 
@@ -37,6 +38,7 @@ def run_test_game():
     disp = BoardTextDisplay()
     g = start_test_game()
     disp_board(disp, g)
+    # the main turn loop
     while not g.get_over():
         g.turn_start()
         print("\n\n" + ("="*10) + "\n\n")

@@ -38,7 +38,7 @@ class BoardTextDisplay():
         r = []
         for player in game._players:
             # name and health
-            r.append("---{0} {{{1}}}---".format(player.name, len(player._deck)))
+            r.append("---{0}-{{{1} health}}---".format(player.name, len(player._deck)))
             r.append("")
             # robots
             r.append("s{0}/s{1}  robots:".format(player.get_total_size(), player.max_size))

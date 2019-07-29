@@ -11,8 +11,8 @@ class RobotTextDisplay(RobotCardTextDisplay):
 
     # subroutine tracker decorum
 
-    l_tracker = "*"
-    r_tracker = "*"
+    l_tracker = "{"
+    r_tracker = "}"
 
     def __init__(self):
         self.robot = None
