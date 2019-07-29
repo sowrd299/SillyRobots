@@ -3,9 +3,15 @@ from player import Player
 
 class GameManager():
 
+    # game phases
+    pre_phase = "PRE" # the game hasn't started
+    main_phase = "MAIN" # the player is acting
+    transition_phase = "TRANSITION" # turns are ending and starting
+
     def __init__(self, players : [Player]):
         self._players = players
         self._current_player_ind = 0
+        self._phase = self.pre_phase 
 
     def resolve_subroutine(self, subroutine : Subroutine, pos : int, controller : Player, target : Player):
         '''
@@ -34,12 +40,16 @@ class GameManager():
     # turn management
 
     def _turn_start(self, player : Player, target : Player):
+        # cleanup from last turn
         player.reset_shields()
+        # run programs
         for i, robot in enumerate(player.board):
             if robot:
                 s = robot.get_subroutine()
                 self.resolve_subroutine(s, i, player, target)
                 robot.next_subroutine()
+        # cleanup
+        self._phase = self.main_phase
 
     def turn_start(self):
         player = self._players[self._current_player_ind]
@@ -53,9 +63,16 @@ class GameManager():
         # cleanup
         for player in self._players:
             player.clear_robots()
+        self._phase = self.transition_phase
 
     def get_current_player_ind(self):
         return self._current_player_ind
+
+    def can_act(self, player_ind : int):
+        '''
+        Returns if the given player may act
+        '''
+        return self._current_player_ind == player_ind and self._phase == self.main_phase
 
     # getters
 

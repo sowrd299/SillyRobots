@@ -4,7 +4,7 @@ from robotCard import RobotCard
 from robot import Robot
 from subroutine import Subroutine
 
-from boardTextDisplay import BoardTextDisplay
+from localTextPlayerController import LocalTextPlayerController
 
 def start_test_game() -> GameManager:
     '''
@@ -29,28 +29,26 @@ def start_test_game() -> GameManager:
     p1.board = [None, Robot(robo_chainer), Robot(robo_stifler), None]
     p2 = Player("Buroad", [robo_paladin] * 3 + [robo_cavlier] * 2 + [robo_stifler])
     p2.board = [Robot(robo_patience), None, Robot(robo_cavlier), None]
+    players = [p1, p2]
 
     #setup the game management
-    g = GameManager([p1, p2])
+    g = GameManager(players)
+    player_controllers = [LocalTextPlayerController(g, i) for i,_ in enumerate(players)]
 
-    return g
-
-def disp_board(disp : BoardTextDisplay, game : GameManager):
-    for line in disp.disp(game, game.get_current_player_ind()):
-        print("\t",line)
+    return (g, player_controllers)
 
 def run_test_game():
-    disp = BoardTextDisplay()
-    g = start_test_game()
+    g, player_controllers = start_test_game()
     g.start_game()
-    disp_board(disp, g)
     # the main turn loop
     while not g.get_over():
-        print(("\n"*5) + ("V"*10) + ("\n"*5)) # spacer between turns
+        # run a turn
         g.turn_start()
-        disp_board(disp, g)
-        input()
+        # let the player do stuff 
+        while not player_controllers[g.get_current_player_ind()].take_actions():
+            pass
         g.end_turn()
+        print("NEXT TURN")
 
 if __name__ == "__main__":
     run_test_game()
