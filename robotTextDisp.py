@@ -21,7 +21,7 @@ class RobotTextDisplay(RobotCardTextDisplay):
 
     def disp_subroutine(self, i : int, sub : Subroutine):
         r = super().disp_subroutine(i, sub)
-        if self.robot and self.robot._subroutine_track == i:
+        if self.robot and self.robot._subroutine_track-1 == i:
             r = self.l_tracker + r + self.r_tracker
         return r
 

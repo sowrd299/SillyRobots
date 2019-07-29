@@ -23,6 +23,8 @@ class GameManager():
         if glt > 0:
             target.board[pos].take_glitch(glt)
 
+    # turn management
+
     def _turn_start(self, player : Player, target : Player):
         player.reset_shields()
         for i, robot in enumerate(player.board):
@@ -33,13 +35,26 @@ class GameManager():
 
     def turn_start(self):
         player = self._players[self._current_player_ind]
-        target = self._players[self._current_player_ind + 1 % len(self._players)]
+        target = self._players[(self._current_player_ind + 1) % len(self._players)]
         self._turn_start(player, target)
 
     def end_turn(self):
+        # advance the turn counter
         self._current_player_ind += 1
+        self._current_player_ind %= len(self._players)
+        # cleanup
+        for player in self._players:
+            player.clear_robots()
 
     def get_current_player_ind(self):
         return self._current_player_ind
+
+    # getters
+
+    def get_over(self):
+        '''
+        Returns if the game has ended
+        '''
+        return any(player.defeated() for player in self._players)
                 
         

@@ -11,6 +11,7 @@ class Player():
     def __init__(self, name, deck : [Card]):
         self._deck = deck
         self._hand = []
+        self._discard = []
         self.name = name
         self.board = [None] * self.board_size 
         self.reset_shields()
@@ -101,3 +102,11 @@ class Player():
         self.board[pos] = Robot(robot_card)
         return [robot_card.bootup] if robot_card.bootup else []
 
+    def clear_robots(self):
+        '''
+        Removes finished robots from the board
+        '''
+        for i, robot in enumerate(self.board):
+            if robot and robot.finished():
+                self._discard.append(robot.get_card())
+                self.board[i] = None

@@ -15,8 +15,8 @@ def start_test_game() -> GameManager:
     sub_noop = Subroutine()
     # make some robots
     robo_chainer = RobotCard("Chainer", [], 2, None, [sub_basic_shoot, sub_basic_glitch, sub_basic_glitch])
-    robo_patience = RobotCard("Patience", [], 3, None, [sub_noop, sub_noop, sub_noop, Subroutine(accuracy = 4, damage = 1, glitch = 1)])
-    robo_paladin = RobotCard("Pali", ["TABLE_COG"], 2, None, [sub_noop, sub_basic_shield, sub_basic_shield])    
+    robo_patience = RobotCard("Patient One", [], 3, None, [sub_noop, sub_noop, sub_noop, Subroutine(accuracy = 4, damage = 1, glitch = 1)])
+    robo_paladin = RobotCard("Paladin", ["TABLE_COG"], 2, None, [sub_noop, sub_basic_shield, sub_basic_shield])    
     robo_cavlier = RobotCard("Cavalier", ["TABLE_COG"], 2, None, [sub_basic_shoot, sub_basic_shield])
     # make some players
     p1 = Player("Arva", [robo_chainer] * 2)
@@ -37,8 +37,12 @@ def run_test_game():
     disp = BoardTextDisplay()
     g = start_test_game()
     disp_board(disp, g)
-    g.turn_start()
-    disp_board(disp, g)
+    while not g.get_over():
+        g.turn_start()
+        print("\n\n" + ("="*10) + "\n\n")
+        disp_board(disp, g)
+        input()
+        g.end_turn()
 
 if __name__ == "__main__":
     run_test_game()

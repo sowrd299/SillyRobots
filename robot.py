@@ -60,3 +60,6 @@ class Robot():
         Returns the factions the robot belongs to
         '''
         return self._card.factions
+
+    def get_card(self):
+        return self._card
