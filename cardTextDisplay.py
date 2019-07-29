@@ -28,7 +28,7 @@ class CardTextDispaly():
 
     def disp_title_line(self, card : Card):
         n = self.disp_name(card)
-        c = self.disp_cost_info(card)
+        c = self.disp_cost_info(card) # TODO: right justifuy this
         return "{0} {1}".format(n, c)
 
     def disp_box(self, text : [str], width = 0, height = 0) -> [str]:

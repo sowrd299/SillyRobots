@@ -3,10 +3,13 @@ from subroutine import Subroutine
 from robotCard import RobotCard
 from robot import Robot
 
+from random import shuffle
+
 class Player():
 
     max_size = 9 # the maximum total size of robots the player may have in play
     board_size = 4 # how many slots for robots are on the board
+    starting_hand_size = 4 # cards to draw at the start of the game
 
     def __init__(self, name, deck : [Card]):
         self._deck = deck
@@ -34,6 +37,9 @@ class Player():
         self._shields = [0] * self.board_size
 
     # BASIC CARD/LIFE MANAGEMENT
+
+    def shuffle_deck(self):
+        shuffle(self._deck)
 
     def draw(self, i : int):
         '''

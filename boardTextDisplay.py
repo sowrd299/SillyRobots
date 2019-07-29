@@ -87,7 +87,7 @@ class BoardTextDisplay():
         def disp_top(): # name and health
             r.append("---{0}-{{{1} health}}---".format(player.name, len(player._deck)))
 
-        def disp_robots():
+        def disp_robots(): # TODO: make player's robots line up accross the board
             # header
             r.append(" {{s{0}/s{1}}}\tdrofuxes:".format(player.get_total_size(), player.max_size))
             # create a function to disp positional shield values; move shields to bottom if inverting

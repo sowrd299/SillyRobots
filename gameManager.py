@@ -23,6 +23,14 @@ class GameManager():
         if glt > 0 and target.board[pos]:
             target.board[pos].take_glitch(glt)
 
+    # game setup management
+    def start_game(self):
+        for player in self._players:
+            # shuffle decks
+            player.shuffle_deck()
+            # draw starting hands
+            player.draw(player.starting_hand_size)
+
     # turn management
 
     def _turn_start(self, player : Player, target : Player):
