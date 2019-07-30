@@ -7,7 +7,10 @@ from random import shuffle
 
 class Player():
 
-    max_size = 9 # the maximum total size of robots the player may have in play
+    # TODO: migrate player states out to Tome/PlayerStat objects?
+    final_max_size = 9 # the maximum total size of robots the player may have in play
+    starting_max_size = 1
+    max_size_per_turn = 2
     board_size = 4 # how many slots for robots are on the board
     starting_hand_size = 4 # cards to draw at the start of the game
 
@@ -18,6 +21,7 @@ class Player():
         self.name = name
         self.board = [None] * self.board_size 
         self.reset_shields()
+        self.max_size = self.get_starting_max_size()
 
     # SHIELD MANAGEMENT
 
@@ -70,6 +74,13 @@ class Player():
         Returns the robots the player has in play
         '''
         return list(filter(None, self.board))
+
+    def increase_max_size(self):
+        '''
+        Increase the max size by a precet amount
+        '''
+        if self.max_size < self.get_final_max_size():
+            self.max_size += self.get_max_size_per_turn()
 
     def _get_total_size(self, robots : [Robot]):
         '''
@@ -132,3 +143,18 @@ class Player():
         Returns a shallow copy of the player's hand
         '''
         return list(self._hand)
+
+    def get_starting_hand_size(self):
+        return self.starting_hand_size
+
+    def get_starting_max_size(self):
+        return self.starting_max_size
+
+    def get_max_size_per_turn(self):
+        return self.max_size_per_turn
+
+    def get_final_max_size(self):
+        return self.final_max_size
+
+    def get_board_size(self):
+        return self.board_size

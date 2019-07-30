@@ -102,7 +102,9 @@ class BoardTextDisplay():
             # header
             ts = player.get_total_size()
             ms = player.max_size
-            r.append(" {{s{0}/s{1} {2}{3}}}\tdrofuxes:".format(ts, ms, "+"*ts, "-" * (ms-ts)))
+            fms = player.get_final_max_size()
+            warming = " warming..." if ms < fms else ""
+            r.append(" {{s{0}/s{1} {2}{3}{4}{5}}}\tdrofuxes:".format(ts, ms, "+"*ts, "-"*(ms-ts), "."*(fms-ms), warming))
             disp_spacer()
             # create a function to disp positional shield values; move shields to bottom if inverting
             disp_shield = lambda i, robot : self.disp_shield(player.get_shield(i), robot, not invert)

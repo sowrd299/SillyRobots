@@ -76,8 +76,10 @@ class GameManager():
     # turn management
 
     def _turn_start(self, player : Player, target : Player):
-        # cleanup from last turn
+        # cleanup from last turn 
         player.reset_shields()
+        # start of turn effects
+        player.increase_max_size()
         # run programs
         for i, robot in enumerate(player.board):
             if robot:
