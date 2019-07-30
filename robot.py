@@ -6,9 +6,10 @@ class Robot():
     '''
 
     def __init__(self, card : RobotCard):
-        self._card = card
-        self._subroutine_track = 0
-        self.routine = None
+        self._card = card # the card the robot was spawned from
+        self._subroutine_track = 0 # tracks the next subroutine to run
+        self._glitched = False # if the robot counts as "glitched"
+        self.routine = None # the routine the robot is running
 
     # BASIC OPPERATIONS
 
@@ -21,11 +22,13 @@ class Robot():
     def next_subroutine(self):
         '''
         Advances to the next subroutine; to be called once/turn
+        Clears "glitched" status
         '''
         if self.routine:
             pass
         else:
             self._subroutine_track += 1
+        self._glitched = False
 
     def get_subroutine(self):
         '''
@@ -44,8 +47,10 @@ class Robot():
     def take_glitch(self, i : int):
         '''
         Inflict i glitch onto the robot
+        Applies the glitched status
         '''
         self._subroutine_track += i
+        self._glitched = True
 
     # STAT CHECKING
 
@@ -63,3 +68,6 @@ class Robot():
 
     def get_card(self):
         return self._card
+
+    def get_glitched(self):
+        return self._glitched

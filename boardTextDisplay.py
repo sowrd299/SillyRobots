@@ -100,7 +100,9 @@ class BoardTextDisplay():
 
         def disp_robots(): # TODO: make player's robots line up accross the board
             # header
-            r.append(" {{s{0}/s{1}}}\tdrofuxes:".format(player.get_total_size(), player.max_size))
+            ts = player.get_total_size()
+            ms = player.max_size
+            r.append(" {{s{0}/s{1} {2}{3}}}\tdrofuxes:".format(ts, ms, "+"*ts, "-" * (ms-ts)))
             disp_spacer()
             # create a function to disp positional shield values; move shields to bottom if inverting
             disp_shield = lambda i, robot : self.disp_shield(player.get_shield(i), robot, not invert)

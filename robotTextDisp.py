@@ -13,6 +13,8 @@ class RobotTextDisplay(RobotCardTextDisplay):
 
     l_tracker = " {*"
     r_tracker = "*} "
+    l_gltiched_tracker = " *%"
+    r_gltiched_tracker = "%* "
 
     def __init__(self):
         self.robot = None
@@ -22,7 +24,16 @@ class RobotTextDisplay(RobotCardTextDisplay):
     def disp_subroutine(self, i : int, sub : Subroutine):
         r = super().disp_subroutine(i, sub)
         if self.robot and self.robot._subroutine_track-1 == i:
-            r = self.l_tracker + r + self.r_tracker
+            if self.robot.get_glitched():
+                r = self.l_gltiched_tracker + r + self.r_gltiched_tracker
+            else:
+                r = self.l_tracker + r + self.r_tracker
+        return r
+
+    def _disp(self, *args, **kwargs) -> [str]:
+        r = super()._disp(*args, **kwargs)
+        if self.robot and self.robot.get_glitched():
+            r.append(self.l_gltiched_tracker+"glitched"+self.r_gltiched_tracker)
         return r
 
     def disp(self, robot : Robot) -> [str]:
@@ -32,5 +43,8 @@ class RobotTextDisplay(RobotCardTextDisplay):
         '''
         self.robot = robot # cache the robot for use elsewhere;
         # ...a bit hacky, but it works
-        return super().disp(robot._card)
+        r = super().disp(robot._card)
+        # apply glitched status
+        # TODO: consolidate the "glitched" stuff?
         self.robot = None # uncash the robot, to prevent weird side effects
+        return r
