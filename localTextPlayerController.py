@@ -37,13 +37,16 @@ class LocalTextPlayerController(PlayerController):
                 return True
             # play cards
             else:
-                card = self.card_chars.index(input_text[0])
-                pos = int(input_text[1])-1
-                if self.may_play_card(card, pos):
-                    self.play_card(card, pos)
-                    print("~> Deploy sucessful")
-                    return False
-                else:
-                    print("~> What nonsense is this? You can't put that there!")
+                try:
+                    card = self.card_chars.index(input_text[0])
+                    pos = int(input_text[1])-1
+                    if self.may_play_card(card, pos):
+                        self.play_card(card, pos)
+                        print("~> Deploy sucessful")
+                        return False
+                    else:
+                        print("~> What nonsense is this? You can't put that there!")
+                except ValueError:
+                    print("~> Hun? What did you say?") # basic error handling
         
         

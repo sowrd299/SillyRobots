@@ -62,7 +62,7 @@ class GameManager():
             bootup = player.play_robot(card, pos)
             # manage bootup
             for sub in bootup:
-                self.resolve_subroutine(sub)
+                self.resolve_subroutine(sub, pos, player, self.get_target_player(player_ind))
 
     # game setup management
 
@@ -111,6 +111,14 @@ class GameManager():
         return self._current_player_ind == player_ind and self._phase == self.main_phase
 
     # getters
+
+    def get_target_player(self, player : "Player or int"):
+        '''
+        Returns the target of the given player
+        '''
+        if isinstance(player, Player):
+            player = self._players.index(player)
+        return self._players[(player + 1) % len(self._players)]
 
     def get_over(self):
         '''
