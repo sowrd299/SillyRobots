@@ -114,6 +114,9 @@ class GameManager():
 
     # getters
 
+    def get_player(self, player_ind):
+        return self._players[player_ind]
+
     def get_target_player(self, player : "Player or int"):
         '''
         Returns the target of the given player
