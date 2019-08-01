@@ -18,17 +18,7 @@ class GameManager():
         '''
         Applies the affects of a subroutine
         '''
-        # this is a bit hardcoded, but...
-        acc = subroutine.accuracy
-        dmg = subroutine.damage
-        shl = subroutine.shield
-        glt = subroutine.glitch
-        if acc >= target.get_shield(pos) and dmg > 0:
-            target.take_damage(dmg)
-        if shl > 0:
-            controller.set_shield(shl, pos)
-        if glt > 0 and target.board[pos]:
-            target.board[pos].take_glitch(glt)
+        subroutine.resolve(pos, controller, target)
 
     def _standardize_hand_card_input(self, player, card):
         # TODO: maybe this standardization should happen elsewhere...?
@@ -78,6 +68,7 @@ class GameManager():
     def _turn_start(self, player : Player, target : Player):
         # cleanup from last turn 
         player.reset_shields()
+        player.clear_robots() # keep other player's robots so can see what they did
         # start of turn effects
         player.increase_max_size()
         # run programs
@@ -99,8 +90,6 @@ class GameManager():
         self._current_player_ind += 1
         self._current_player_ind %= len(self._players)
         # cleanup
-        for player in self._players:
-            player.clear_robots()
         self._phase = self.transition_phase
 
     def get_current_player_ind(self):

@@ -36,6 +36,12 @@ class Player():
         Sets the value of the shied in a given position
         '''
         self._shields[pos] = val
+
+    def add_shield(self, val : int, pos : int):
+        '''
+        Increases the value of the shied in a given position
+        '''
+        self._shields[pos] += val
     
     def reset_shields(self):
         self._shields = [0] * self.board_size
@@ -137,6 +143,9 @@ class Player():
                 self.board[i] = None
 
     # GETTERS
+
+    def get_name(self):
+        return self.name
 
     def get_hand(self):
         '''
