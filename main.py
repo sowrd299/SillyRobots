@@ -8,6 +8,27 @@ from playerController import PlayerController
 from localTextPlayerController import LocalTextPlayerController
 from encounterAiPlayerController import EncounterAiPlayerController
 
+from dialogueSpeachNode import DialogueSpeachNode
+from character import Character
+
+def build_dialogue(): 
+    '''
+    Creates dialogue
+    '''
+
+    char_buroad = Character("Buroad")
+    char_kaoforp = Character("Kaoforp")
+
+    # establish the dialogue in order as (character, text, metatext) tuples
+    texts = [
+        (char_kaoforp, "Welcome Arva! It is an honor you could join us!", "Arms held wide"),
+        (char_buroad, "Sir, who is the new arival?", "A pleasant smile on his face"),
+        (char_kaoforp, "She is our latest tranee. Arva of Unders. Millain says very good things about her.", None),
+        (char_buroad, "Of Unders...", "Shoulders back, one eyebrow raised"),
+        (char_kaoforp, "Yes, Squire, that is what I said", "Looking down, and begining to thumb a large book"),
+        (char_buroad, "It is a pleaser to meet a lady from, so far a field", "Slowly")
+    ]
+
 def build_players() -> GameManager:
     '''
     Creates all the cards and the decks with those cards
