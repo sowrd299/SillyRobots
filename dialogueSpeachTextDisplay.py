@@ -28,7 +28,7 @@ class DialogueSpeachTextDisplay():
     def disp_text (self, text : str):
         l = self.bottom_l_end
         r = self.bottom_r_end
-        edge = l + bottom_h_edge * (len(text)-len(l)-len(r)) + r
+        edge = l + self.bottom_h_edge * (len(text)-len(l)-len(r)) + r
         return [text, edge]
 
     def disp(self, node : DialogueSpeachNode):

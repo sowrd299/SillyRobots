@@ -1,5 +1,8 @@
 from dialogueNode import DialogueNode
 
+class UnexpectedEndOfDialogueError(Exception):
+    pass
+
 class DialogueManager():
     '''
     A class for managing dialogue in the RPG
@@ -16,7 +19,7 @@ class DialogueManager():
         '''
         self._node = node
 
-    def get_current_node(self, node : DialogueNode):
+    def get_current_node(self):
         '''
         Returns the current node in the dialogue
         '''
@@ -27,6 +30,9 @@ class DialogueManager():
         Adavances dialogue to the next node
         '''
         self._node = self._node.get_next_node()
+        # error handling
+        if not isinstance(self._node, DialogueNode):
+            raise UnexpectedEndOfDialogueError
 
     def update_node(self):
         '''

@@ -10,6 +10,7 @@ class CardTextDispaly():
     l_corner = "+"
     r_corner = "+"
     h_edge = "-"
+    bottom_h_edge = "~"
     v_edge = "|"
 
     # other display variables
@@ -39,7 +40,7 @@ class CardTextDispaly():
         h = height or len(text)
         top = self.l_corner + self.h_edge*w + self.r_corner
         middle = [ "{0}{1:<{2}}{0}".format(self.v_edge, line, w) for line in text ]
-        bottom = self.r_corner + self.h_edge*w + self.l_corner
+        bottom = self.r_corner + self.bottom_h_edge*w + self.l_corner
         middle.insert(0, top)
         middle.append(bottom)
         return middle

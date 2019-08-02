@@ -9,7 +9,7 @@ class DialogueSceneTextDisplay():
 
     indent_step = 8
 
-    def __init__(self, dm : Dialogue):
+    def __init__(self):
         self.clear_indents()
         self.speach_disp = DialogueSpeachTextDisplay()
 
@@ -28,22 +28,22 @@ class DialogueSceneTextDisplay():
         return r
 
     # 
-    def disp(self)
+    def disp(self, node):
         '''
         Displays the current node in the scene
         '''
-        node = self.dialogue.get_node()
         if isinstance(node, DialogueSpeachNode):
             r = self.speach_disp.disp(node)
             # do the indentation
             indent = ""
             character = node.get_character() 
             if character not in self.character_indents:
-                used_indent = set(self.character_indents.values())
+                used_indents = set(self.character_indents.values())
                 for i in range(8): # maximum default indent
                     # TODO: ignores text set indents
                     if i * self.indent_step not in used_indents:
                         self.character_indents[character] = i*self.indent_step
+                        break
             indent = self.get_indent(character)
             r = [indent + line for line in r]
             # cleanup

@@ -1,3 +1,8 @@
+from dialogueManager import DialogueManager
+from dialogueSpeachNode import DialogueSpeachNode
+from dialogueNode import DialogueNode
+from character import Character
+
 from gameManager import GameManager
 from player import Player
 from robotCard import RobotCard
@@ -7,9 +12,8 @@ from subroutine import Subroutine
 from playerController import PlayerController
 from localTextPlayerController import LocalTextPlayerController
 from encounterAiPlayerController import EncounterAiPlayerController
+from localTextDialoguePlayerController import LocalTextDialoguePlayerController
 
-from dialogueSpeachNode import DialogueSpeachNode
-from character import Character
 
 def build_dialogue(): 
     '''
@@ -28,6 +32,14 @@ def build_dialogue():
         (char_kaoforp, "Yes, Squire, that is what I said", "Looking down, and begining to thumb a large book"),
         (char_buroad, "It is a pleaser to meet a lady from, so far a field", "Slowly")
     ]
+
+    # build the nodes
+    node = None
+    while texts:
+        character, text, meta_text = texts.pop(-1)
+        node = DialogueSpeachNode(character, text, node, meta_text)
+
+    return node
 
 def build_players() -> GameManager:
     '''
@@ -83,6 +95,12 @@ def build_players() -> GameManager:
 
 # GAME SETUPS
 
+def setup_dialogue(start_node : DialogueNode):
+    d = DialogueManager()
+    d.start_from(start_node)
+    controller = LocalTextDialoguePlayerController(d)
+    return (d, controller)
+
 def setup_encounter_game(players : {str : Player}):
     #setup the game management
     g = GameManager([players["Pack of Lupoforms"], players["Buroad"]])
@@ -107,6 +125,10 @@ def no_transition(_, __):
 
 # THE REAL "MAIN" STUFF
 
+def run_dialogue(d, player_controller):
+    while True:
+        player_controller.take_actions()
+
 def run_game(g : GameManager, player_controllers : [PlayerController], transition):
     g.start_game()
     # the main turn loop
@@ -123,5 +145,7 @@ def run_game(g : GameManager, player_controllers : [PlayerController], transitio
     print(LocalTextPlayerController.prompt+"Game Over")
 
 if __name__ == "__main__":
+    dialogue = build_dialogue()
+    run_dialogue( *setup_dialogue(dialogue) )
     players = build_players()
     run_game( *setup_encounter_game(players), no_transition )

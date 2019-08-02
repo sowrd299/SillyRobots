@@ -8,4 +8,4 @@ class Character():
         self.name = name
 
     def get_name(self):
-        return self.name()
+        return self.name
