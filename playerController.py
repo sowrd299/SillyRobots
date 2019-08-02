@@ -27,6 +27,8 @@ class PlayerController():
         if not self.game.can_act(self.player_ind):
             raise OutOfTurnException
         return True 
+    
+    # TODO: have a cleaner way for saying the turn is over
 
     def may_play_card(self, card : "int or Card", pos : int):
         '''

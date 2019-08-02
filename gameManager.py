@@ -114,7 +114,7 @@ class GameManager():
             player = self._players.index(player)
         return self._players[(player + 1) % len(self._players)]
 
-    def get_over(self):
+    def get_finished(self):
         '''
         Returns if the game has ended
         '''

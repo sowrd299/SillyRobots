@@ -1,4 +1,5 @@
 from dialogueNode import DialogueNode
+from dialogueCombatNode import DialogueCombatNode
 
 class UnexpectedEndOfDialogueError(Exception):
     pass
@@ -40,3 +41,13 @@ class DialogueManager():
         '''
         if self._node.get_finished():
             self._next_node()
+
+    # SPECIAL EVENT MANAGEMENT
+
+    def get_game(self):
+        '''
+        Returns any game being started by the current node
+        '''
+        # TODO: genericize this
+        if isinstance(self._node, DialogueCombatNode):
+            return (self._node.get_game(), self._node.get_player_controllers())
