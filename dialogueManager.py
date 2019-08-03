@@ -34,6 +34,8 @@ class DialogueManager():
         # error handling
         if not isinstance(self._node, DialogueNode):
             raise UnexpectedEndOfDialogueError
+        # run any code the node needs to setup
+        self._node.start()
 
     def update_node(self):
         '''
@@ -48,6 +50,6 @@ class DialogueManager():
         '''
         Returns any game being started by the current node
         '''
-        # TODO: genericize this
+        # NOTE: DEPRICATED
         if isinstance(self._node, DialogueCombatNode):
             return (self._node.get_game(), self._node.get_player_controllers())

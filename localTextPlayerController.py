@@ -1,8 +1,8 @@
-from playerController import PlayerController
+from playerGameController import PlayerGameController
 
 from boardTextDisplay import BoardTextDisplay
 
-class LocalTextPlayerController(PlayerController):
+class LocalTextPlayerController(PlayerGameController):
     '''
     A player controller for local, human players
     playing with a text-based interface
@@ -17,17 +17,28 @@ class LocalTextPlayerController(PlayerController):
         super().__init__(game, player_ind)
         self.disp = BoardTextDisplay()
 
-    # display functions
+    # DISPLAY FUNCTIONS
 
     def disp_board(self):
         hand_label = lambda i, _ : self.card_chars_disp[i]
         for line in self.disp.disp(self.game, self.player_ind, hand_label = hand_label):
             print("\t",line)
-    
-    # game control functions
 
-    def take_actions(self):
-        super().take_actions()
+    # TRANSITIONS
+
+    def hotseat_transition(player_controller, player):
+        # yes self is misnamed
+        prompt = player_controller.prompt
+        name = player.get_name()
+        prompt_str = "\n" * 100 + "{0}Here starts {1}'s next turn.\n{0}[ENTER]".format(prompt, name)
+        input(prompt_str)
+
+    def no_transition(self, _):
+        pass
+    
+    # GAME CONTROL FUNCTIONS
+
+    def _take_actions(self):
         # print a bunch of stuff
         print(("\n"*5) + ("V"*100) + ("\n"*3)) # spacer between turns
         self.disp_board()

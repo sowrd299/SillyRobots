@@ -1,13 +1,17 @@
+from playerController import PlayerController
+
 from dialogueManager import DialogueManager
 from dialogueSceneTextDisplay import DialogueSceneTextDisplay
 from dialogueSpeachNode import DialogueSpeachNode
 
-class LocalTextDialoguePlayerController():
+class LocalTextDialoguePlayerController(PlayerController):
     '''
     A class for an RPG player playing the game locally through text
     '''
-    # TODO: merge this with the non-dialogue player controller?
+    # TODO: connect this with the non-dialogue player controller?
     #       ... the problem there is that those are tied to individual (card) games
+    # TODO: also create a dialogue player controller superclass...
+    #       ... but that would be pretty useless in the current build
 
     def __init__(self, dialogue : DialogueManager):
         self.dialogue = dialogue
@@ -17,11 +21,16 @@ class LocalTextDialoguePlayerController():
         text = self.disp.disp(self.dialogue.get_current_node())
         for line in text:
             print("\t"+line)
+        return text
 
     def take_actions(self):
-        if isinstance(self.dialogue.get_current_node(), DialogueSpeachNode):
-            # TODO: not need to be so specific about this
-            self.show_current_node()
+        text = self.show_current_node()
+        if text: # don't wait up if nothing happened
             input_text = input()
+        return True
+        
+    def advance(self):
         self.dialogue.update_node()
-        # TODO: decide between controller and main who gets to call this
+
+    def get_new_player_controllers(self):
+        return self.dialogue.get_current_node().get_player_controllers()

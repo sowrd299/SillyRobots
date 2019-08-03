@@ -1,6 +1,6 @@
-from playerController import PlayerController
+from playerGameController import PlayerGameController
 
-class EncounterAiPlayerController(PlayerController):
+class EncounterAiPlayerController(PlayerGameController):
     '''
     A player controller class for managing a simple "wilderness encounter" 
     -style enemy AI

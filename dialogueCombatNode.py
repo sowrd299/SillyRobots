@@ -13,6 +13,10 @@ class DialogueCombatNode(DialogueNode):
         self.game = game
         self.player_controllers = player_controllers
 
+    def start(self):
+        self.game.start_game()
+        self.game.turn_start()
+
     # GETTERS
 
     def get_game(self):
@@ -33,7 +37,7 @@ class DialogueCombatFinishedNode(DialogueNode):
     A node that waits for combat to be over before advancing the dialogue 
     '''
 
-    def __init__(self, game : GameManager, next_nodes [DialogueNode]):
+    def __init__(self, game : GameManager, next_nodes : [DialogueNode]):
         super().__init__(None)
         self.game = game
         self.next_nodes = next_nodes

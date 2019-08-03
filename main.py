@@ -41,8 +41,8 @@ def build_dialogue():
     players = build_players()
     combat_node = DialogueCombatNode(*setup_encounter_game(players), None)
     # set the win and loss states
-    win_node = DialogueSpeachNode(char_buroad, "Ugh, the new one's down; alright sir, let's end this")
-    loss_node = DialogueSpeachNode(char_kaoforp, "Well done! this is a great start for our time together")
+    win_node = DialogueSpeachNode(char_buroad, "The new one's down; alright sir, let's end this", None)
+    loss_node = DialogueSpeachNode(char_kaoforp, "Well done! this is a great start for our time together", None)
     combat_node.set_next_node(combat_node.make_finished_node([loss_node, win_node]))
 
     # build the nodes backwords
@@ -124,59 +124,23 @@ def setup_hotseat_game(players : {str : Player}):
     player_controllers = [EncounterAiPlayerController(g, 0), LocalTextPlayerController(g, 1)]
     return (g, player_controllers)
 
-# TRANSITIONS
-
-def hotseat_transition(player_controller, player):
-    prompt = player_controller.prompt
-    name = player.get_name()
-    prompt_str = "\n" * 100 + "{0}Here starts {1}'s next turn.\n{0}[ENTER]".format(prompt, name)
-    input(prompt_str)
-
-def no_transition(_, __):
-    pass
-
 # THE REAL "MAIN" STUFF
 
-class ConflictingGameError(Exception):
-    '''
-    For when two games try to start at the same time
-    '''
-    pass
-
-def run_game(d : DialogueManager, player_controller, transition):
-    '''
-    Runs the game, starting from a dialogue node
-    '''
-    # SETUP VARIABLES
-    g = None
-    player_controllers = []
-    # THE MAIN LOOP
+def run_game(player_controllers : [PlayerController]):
+    # runs the game the given player controllers are playing
+    pcs = list(player_controllers)    
     while True:
-        player_controller.take_actions()
-        # see if we need to start a game
-        game_data = d.get_game()
-        if game_data:
-            if not g:
-                g, player_controllers = game_data
-                g.start_game()
-                g.turn_start()
-            else:
-                raise ConflictingGameError
-        # if we are in a game, handle it
-        # the main turn loop
-        if g:            
-            pc = player_controllers[g.get_current_player_ind()]
-            transition(pc, g._players[g.get_current_player_ind()])
-            # let the player do stuff 
+        for pc in player_controllers:
+            # main update
             if pc.take_actions():
-                # if the turn ended, advance the turn
-                g.end_turn()
-                g.turn_start()
-            if g.get_finished():
-                g = None
-                player_controllers = []
+                pc.advance()
+            # add new player controllers
+            pcs.extend(pc.get_new_player_controllers())
+        # remove old player controllers
+        pcs = [pc for pc in pcs if not pc.get_finished()]
 
 if __name__ == "__main__":
     # run test dialogue and game
     dialogue = build_dialogue()
-    run_game( *setup_dialogue(dialogue), no_transition)
+    _, controller = setup_dialogue(dialogue)
+    run_game([controller])

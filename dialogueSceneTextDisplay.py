@@ -48,3 +48,4 @@ class DialogueSceneTextDisplay():
             r = [indent + line for line in r]
             # cleanup
             return r
+        return [] # the default, to keep from crashing

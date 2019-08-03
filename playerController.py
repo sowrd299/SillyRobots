@@ -1,43 +1,31 @@
-from gameManager import GameManager
-
-class OutOfTurnException(Exception):
-    pass
-
 class PlayerController():
     '''
-    An ABSTRACT class that represents whatever controlls a card-game player
-    Be that human, a networked client or an AI
-    Manages the complete interface and UI with that entity
+    An ABSTRACT class for interfacing with a player
+    or other intelegance that will advance the game state
     '''
-    
-    def __init__(self, game : GameManager, player_ind : int):
-        '''
-        :param game: The game the player is playing in
-        :param player_ind: the index of the player this control controls
-        '''
-        self.game = game
-        self.player_ind = player_ind
 
     def take_actions(self) -> bool:
         '''
-        Run this to allow the player to one or more actions on the game state
-        May need to be called multiple times per turn
-        Returns if the turn is over
+        Run this to allow the player to act
+        Returns true when ready for "advance" to be called
         '''
-        if not self.game.can_act(self.player_ind):
-            raise OutOfTurnException
-        return True 
-    
-    # TODO: have a cleaner way for saying the turn is over
+        raise NotImplemented
 
-    def may_play_card(self, card : "int or Card", pos : int):
+    def advance(self):
         '''
-        Returns if the controlled player may play the given card at the given location
+        To be called after take_actions returns true
         '''
-        return self.game.may_play_card(self.player_ind, card, pos)
+        raise NotImplemented
 
-    def play_card(self, card : "int or Card", pos : int):
+    def get_new_player_controllers(self) -> list:
         '''
-        Returns if the controlled player may play the given card at the given location
+        Returns additional player controllers that have joined the game
+        ...as a resault of something this PC did
         '''
-        self.game.play_card(self.player_ind, card, pos)
+        return []
+
+    def get_finished(self) -> bool:
+        '''
+        Returns True if this PC is no longer useful or needed
+        '''
+        return False

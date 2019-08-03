@@ -119,5 +119,12 @@ class GameManager():
         Returns if the game has ended
         '''
         return any(player.defeated() for player in self._players)
-                
-        
+
+    def get_winner(self):
+        '''
+        Returns the index of the winner of the game
+        Returns nonsense if the game is ongoing
+        '''
+        for i, player in self._players:
+            if not player.defeated():
+                return i
