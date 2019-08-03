@@ -40,7 +40,10 @@ def build_dialogue():
     # setup test combat
     players = build_players()
     combat_node = DialogueCombatNode(*setup_encounter_game(players), None)
-    combat_node.set_next_node(combat_node.make_finished_node(None))
+    # set the win and loss states
+    win_node = DialogueSpeachNode(char_buroad, "Ugh, the new one's down; alright sir, let's end this")
+    loss_node = DialogueSpeachNode(char_kaoforp, "Well done! this is a great start for our time together")
+    combat_node.set_next_node(combat_node.make_finished_node([loss_node, win_node]))
 
     # build the nodes backwords
     node = combat_node 
@@ -112,7 +115,7 @@ def setup_dialogue(start_node : DialogueNode):
 
 def setup_encounter_game(players : {str : Player}):
     #setup the game management
-    g = GameManager([players["Pack of Lupoforms"], players["Buroad"]])
+    g = GameManager([players["Pack of Lupoforms"], players["Arva"]])
     player_controllers = [EncounterAiPlayerController(g, 0), LocalTextPlayerController(g, 1)]
     return (g, player_controllers)
 
