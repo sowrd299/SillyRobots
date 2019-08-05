@@ -15,7 +15,7 @@ class DialogueCombatNode(DialogueNode):
 
     def start(self):
         self.game.start_game()
-        self.game.turn_start()
+        self.game.start_turn()
 
     # GETTERS
 

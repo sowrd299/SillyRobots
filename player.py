@@ -56,7 +56,7 @@ class Player():
         Adds i cards from top of deck to hand
         '''
         if i > len(self._deck):
-            i = len(self.deck)
+            i = len(self._deck)
         self._hand.extend(self._deck[:i])
         # TODO: sort the hand
         self._deck = self._deck[i:]

@@ -41,8 +41,8 @@ def build_dialogue():
     players = build_players()
     combat_node = DialogueCombatNode(*setup_encounter_game(players), None)
     # set the win and loss states
-    win_node = DialogueSpeachNode(char_buroad, "The new one's down; alright sir, let's end this", None)
-    loss_node = DialogueSpeachNode(char_kaoforp, "Well done! this is a great start for our time together", None)
+    loss_node = DialogueSpeachNode(char_buroad, "The new one's down; alright sir, let's end this", None)
+    win_node = DialogueSpeachNode(char_kaoforp, "Well done! this is a great start for our time together", None)
     combat_node.set_next_node(combat_node.make_finished_node([loss_node, win_node]))
 
     # build the nodes backwords
@@ -130,7 +130,7 @@ def run_game(player_controllers : [PlayerController]):
     # runs the game the given player controllers are playing
     pcs = list(player_controllers)    
     while True:
-        for pc in player_controllers:
+        for pc in pcs:
             # main update
             if pc.take_actions():
                 pc.advance()

@@ -11,7 +11,7 @@ class EncounterAiPlayerController(PlayerGameController):
         # TODO: this feels like an invasion of privary, but I can't see a better way
         self.player = self.game.get_player(self.player_ind)
 
-    def take_actions(self):
+    def _take_actions(self):
         '''
         A monoric algorithm that just wants to play all the cards it has
         '''

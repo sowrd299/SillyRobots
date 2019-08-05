@@ -30,7 +30,7 @@ class PlayerGameController(PlayerController):
         '''
         if not self.game.can_act(self.player_ind):
             return False
-        return self._take_actions(self)
+        return self._take_actions()
 
     def advance(self):
         '''

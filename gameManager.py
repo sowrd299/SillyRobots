@@ -65,7 +65,7 @@ class GameManager():
 
     # turn management
 
-    def _turn_start(self, player : Player, target : Player):
+    def _start_turn(self, player : Player, target : Player):
         # cleanup from last turn 
         player.reset_shields()
         player.clear_robots() # keep other player's robots so can see what they did
@@ -80,10 +80,10 @@ class GameManager():
         # cleanup
         self._phase = self.main_phase
 
-    def turn_start(self):
+    def start_turn(self):
         player = self._players[self._current_player_ind]
         target = self._players[(self._current_player_ind + 1) % len(self._players)]
-        self._turn_start(player, target)
+        self._start_turn(player, target)
 
     def end_turn(self):
         # advance the turn counter
@@ -125,6 +125,7 @@ class GameManager():
         Returns the index of the winner of the game
         Returns nonsense if the game is ongoing
         '''
-        for i, player in self._players:
+        for i, player in enumerate(self._players):
             if not player.defeated():
+                print("TEST: Winner", player.name)
                 return i
