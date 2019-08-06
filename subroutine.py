@@ -57,6 +57,10 @@ class Subroutine():
         if acc > target.get_shield(pos) and dmg > 0:
             target.take_damage(dmg)
 
+    def _resolve_at(self, pos : int, controller, target):
+        self._resolve_shield(pos, controller)
+        self._resolve_glitch(pos, target)
+
     def resolve(self, center_pos : int, controller, target):
         '''
         Applies the effects of the subroutine to the gamestate
@@ -66,5 +70,4 @@ class Subroutine():
         for i, in_area in enumerate(self.area):
             if in_area:
                 pos = center_pos + i - self.area_center_ind
-                self._resolve_shield(pos, controller)
-                self._resolve_glitch(pos, target)
+                self._resolve_at(pos, controller, target)

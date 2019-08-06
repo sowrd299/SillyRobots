@@ -133,6 +133,14 @@ class Player():
         self.board[pos] = Robot(robot_card)
         return [robot_card.bootup] if robot_card.bootup else []
 
+    def return_robot(self, pos : int):
+        '''
+        Returns the robot at the given index to it's owner's hand
+        '''
+        if(self.board[pos]):
+            self._hand.append(self.board[pos].get_card())
+            self.board[pos] = None
+
     def clear_robots(self):
         '''
         Removes finished robots from the board

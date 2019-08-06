@@ -77,6 +77,8 @@ class RobotCardTextDisplay(CardTextDispaly):
         r = super()._disp(card)
         # the bootup
         r.extend(self.disp_bootup(card.bootup))
+        if card.bootup: # ignore none subroutines
+            r.extend(self.disp_area([card.bootup]))
         # the program
         r.extend(self.disp_program(card.program))
         # the area of effect

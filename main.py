@@ -9,6 +9,7 @@ from player import Player
 from robotCard import RobotCard
 from robot import Robot
 from subroutine import Subroutine
+from returnSubroutine import ReturnSubroutine
 
 from playerController import PlayerController
 from localTextPlayerController import LocalTextPlayerController
@@ -70,9 +71,9 @@ def build_players() -> GameManager:
     robo_chainer = RobotCard("Chainer.II", [], 2, None, [Subroutine(glitch=2), sub_noop, sub_basic_shoot])
     robo_sunderer = RobotCard("Lesser Sunderer", [], 3, None, [sub_noop, sub_basic_shoot] * 2)
     robo_machine = RobotCard("Nine-Wand", [], 2, None, [sub_noop] + [Subroutine(accuracy=1, damage=1)]*3)
-    # TINZLY
-    robo_wrench = RobotCard("Bolt Wrench", ["Tinzly"], 2, Subroutine(glitch=1), [sub_noop])
-    robo_fair = RobotCard("Fair Shot", ["Tinzly"], 2, None, [sub_noop, Subroutine(accuracy=1, damage=3)])
+    robo_return = RobotCard("Turn:leash", [], 1, ReturnSubroutine(), [sub_noop] * 3)
+    # STOETN
+    robo_wrench = RobotCard("Bolt Wrench", ["Stoetn"], 2, Subroutine(glitch=1), [sub_noop])
     # COMLIAN
     robo_patience = RobotCard("Patient One", ["Comlian"], 3, None, [sub_noop]*3 + [Subroutine(accuracy = 4, damage = 3), sub_noop])
     robo_paladin = RobotCard("Paladin", ["Comlian"], 2, None, [sub_noop, sub_basic_shield, sub_basic_shield, Subroutine(accuracy=2, damage=2)])    
@@ -88,12 +89,14 @@ def build_players() -> GameManager:
     robo_pure_sassin = RobotCard("Purist's 'Sassin", ["Unders"], 3, None, [Subroutine(glitch=3)])
     robo_cap = RobotCard("Capshot", ["Unders"], 1, Subroutine(accuracy=1, damage=1), [sub_noop] * 3)
     # WOLDEN
-    robo_wolf = RobotCard("Lupoform", ["Wolden"], 2, None, [sub_noop, Subroutine(accuracy=1, damage=1), Subroutine(shield=2), Subroutine(accuracy=1, damage=1), sub_noop])
+    robo_wolf = RobotCard("Agile Lupoform", ["Wolden"], 2, None, [sub_noop, Subroutine(accuracy=1, damage=1), Subroutine(shield=2), Subroutine(accuracy=1, damage=1), sub_noop])
+    robo_wolf = RobotCard("Lupoform", ["Wolden"], 2, None, [sub_noop, Subroutine(shield=2), Subroutine(accuracy=1, damage=1), Subroutine(accuracy=1, damage=1)])
     robo_alfa = RobotCard("Lupoform First", ["Wolden"], 4, None, [sub_basic_shield, sub_noop, sub_basic_shield, Subroutine(accuracy=3, damage=4), sub_noop])
     robo_pup = RobotCard("Playful Pup", ["Wolden"], 1, None, [sub_noop, Subroutine(glitch=1, area=Subroutine.splash_area)])
+    robo_fair = RobotCard("Timber Tumbler", ["Wolden"], 2, None, [sub_noop, Subroutine(accuracy=1, damage=3)])
 
     # make some players
-    p1 = Player("Arva", [robo_chainer] * 3 + [robo_snipe] * 2 + [robo_machine] * 2 + [robo_stifler] * 2 + [robo_cap] * 3 + [robo_sunderer] * 2)
+    p1 = Player("Arva", [robo_chainer] * 3 + [robo_snipe] * 2 + [robo_machine] * 2 + [robo_return] * 2 + [robo_cap] * 3 + [robo_sunderer] * 2)
     #p1.board = [None, Robot(robo_chainer), Robot(robo_stifler), None]
     p2 = Player("Buroad", [robo_interceptor] * 2 + [robo_flash] * 1 + [robo_patience] * 3 + [robo_paladin] * 2 + [robo_cavlier] * 3 + [robo_broad] * 3)
     #p2.board = [Robot(robo_patience), None, Robot(robo_cavlier), None]
